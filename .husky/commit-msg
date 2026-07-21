@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+msg_file="$1"
+msg=$(head -n1 "$msg_file")
+length=${#msg}
+
+if [ $length -gt 100 ]; then
+  echo "Error: Commit message is longer than 100 characters (current length: $length)."
+  exit 1
+fi
+
+if ! echo "$msg" | grep -Eq '^(feat|fix|perf|docs|refactor|ci|style|build|test): .+$'; then
+  echo "Error: Invalid commit message format."
+  echo "Format should be strictly '<type>: <message>'."
+  echo "Allowed types: feat, fix, perf, docs, refactor, ci, style, build, test."
+  echo "Scoping like 'feat(module): ...' is NOT allowed."
+  exit 1
+fi
