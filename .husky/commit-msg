@@ -9,10 +9,10 @@ if [ $length -gt 100 ]; then
   exit 1
 fi
 
-if ! echo "$msg" | grep -Eq '^(feat|fix|perf|docs|refactor|ci|style|build|test): .+$'; then
+if ! echo "$msg" | grep -Eq '^(feat|fix|perf|docs|refactor|ci|style|build|test|chore): .+$'; then
   echo "Error: Invalid commit message format."
   echo "Format should be strictly '<type>: <message>'."
-  echo "Allowed types: feat, fix, perf, docs, refactor, ci, style, build, test."
+  echo "Allowed types: feat, fix, perf, docs, refactor, ci, style, build, test, chore."
   echo "Scoping like 'feat(module): ...' is NOT allowed."
   exit 1
 fi
