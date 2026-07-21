@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { environmentConfig, postgresConfig } from './common/config';
 import { DataSourceOptions } from 'typeorm';
 import { getConfig } from './common/helpers';
+import { CoreModule } from './core/core.module';
+import { ObservabilityModule } from './core/observability/observability.module';
 
 @Module({
   imports: [
@@ -26,6 +28,10 @@ import { getConfig } from './common/helpers';
     }),
 
     RestModule,
+
+    CoreModule,
+
+    ObservabilityModule,
   ],
 })
 export class AppModule {}
