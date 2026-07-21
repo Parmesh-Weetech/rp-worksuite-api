@@ -1,98 +1,51 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# RP WorkSuite API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 🏢 About the Company: RitualPlanner
+**RitualPlanner** is a rapidly scaling platform dedicated to modernizing and managing the traditional workflow of priests, rituals, and spiritual event planning. As the core business expands—serving more priests, clients, and handling complex B2B subcontracting workflows—the internal operations of the company must scale alongside it. 
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+To support our growing team of engineers, support staff, and administrative personnel, we require robust, enterprise-grade internal tools.
 
-## Description
+## 💻 About the Project: RP WorkSuite
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+**RP WorkSuite API** is the official internal Human Resource Management System (HRMS) and Employee Portal backend for RitualPlanner. 
 
-## Project setup
+While the core RitualPlanner product focuses entirely on our external users (Priests, Clients, and Temples), the **WorkSuite** focuses entirely on the internal health and management of our own company. As we hire more remote developers, customer support agents, and marketing staff, manual tracking of employee data through spreadsheets is no longer viable. 
 
-```bash
-$ pnpm install
-```
+To ensure absolute data security, strict regulatory compliance, and zero cross-contamination with client data, this project runs on a completely isolated database architecture (`rp_worksuite`).
 
-## Compile and run the project
+### 🎯 Project Vision & Goals
+The primary goal of the RP WorkSuite is to automate the daily administrative overhead for the HR and Management teams. By providing a centralized, API-driven hub, we aim to:
+1. **Eliminate Data Silos:** Bring all employee documents, emergency contacts, and payroll data into a single source of truth.
+2. **Automate Compliance:** Accurately track work hours, timezones, and paid time off (PTO) to ensure labor compliance for both local and remote employees.
+3. **Streamline Communication:** Provide a unified bulletin board where company-wide announcements and policy changes can be distributed instantly.
 
-```bash
-# development
-$ pnpm run start
+### 🚀 Detailed Core Modules
 
-# watch mode
-$ pnpm run start:dev
+#### 1. Employee Directory & Lifecycle Management
+This module acts as the digital filing cabinet for the company.
+- **Onboarding/Offboarding:** Secure endpoints to provision new employee accounts and instantly revoke access (via Google SSO integrations) when an employee departs.
+- **Document Vault:** Secure storage for highly sensitive documents such as government ID proofs, non-disclosure agreements (NDAs), and signed employment contracts.
+- **Organizational Hierarchy:** Deep relational mapping between employees and their department managers to automatically route requests up the chain of command.
 
-# production mode
-$ pnpm run start:prod
-```
+#### 2. Advanced Attendance Tracking
+Built for a modern, hybrid workforce, this module ensures accurate timekeeping.
+- **Timezone-Aware Clocking:** Employees can clock in and out from anywhere in the world. The backend standardizes all timestamps in UTC while serving localized times to managers.
+- **Geolocation & IP Restriction:** (Optional) Security layers to ensure employees are clocking in from authorized office networks or approved remote locations.
+- **Timesheet Generation:** Automated weekly and monthly aggregation of total hours worked to seamlessly feed into payroll systems.
 
-## Run tests
+#### 3. Automated Leave Management (PTO & Sick Leave)
+A complex state-machine module that completely automates time-off requests.
+- **Accrual Engine:** Automatically calculates and grants new leave days to employees based on their tenure and company policy.
+- **Hierarchical Approval Workflows:** When an employee requests time off, the request enters a `PENDING` state and is routed directly to their designated Manager. Managers can approve or reject the request, triggering automated email notifications.
+- **Balance Tracking:** Real-time ledgers showing exactly how many sick days and vacation days an employee has remaining.
 
-```bash
-# unit tests
-$ pnpm run test
+#### 4. Strict Role-Based Access Control (RBAC) & Audit Logging
+Because an HRMS contains salaries and sensitive personal data, security is the highest priority. The system utilizes multi-tier role separation:
+- **`EMPLOYEE`:** Can only view their own profile, submit their own leaves, and clock their own time.
+- **`MANAGER`:** Elevated privileges to view profiles and approve leaves *only* for their direct subordinates.
+- **`HR_ADMIN`:** Administrative control to manage company-wide announcements, adjust leave balances, and onboard new hires.
+- **`SUPER_ADMIN`:** Full system access restricted to founders and executives, capable of viewing financial data and global settings.
+- **Audit Trails:** Every single action (e.g., an HR admin changing a leave balance, or a manager rejecting a request) is permanently recorded in an immutable `audit_logs` table for compliance and dispute resolution.
 
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+---
+*This project is internal and proprietary to RitualPlanner.*
