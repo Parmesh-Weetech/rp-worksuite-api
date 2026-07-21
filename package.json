@@ -99,6 +99,10 @@
         2,
         "always",
         100
+      ],
+      "scope-empty": [
+        2,
+        "always"
       ]
     }
   }
