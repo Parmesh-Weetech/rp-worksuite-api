@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { environmentConfig, postgresConfig } from './common/config';
 import { DataSourceOptions } from 'typeorm';
 import { getConfig } from './common/helpers';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
