@@ -1,8 +1,10 @@
 import { INestApplication, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { RedisService } from './app/redis/services/redis.service';
 
 export const setupApp = (app: INestApplication) => {
   const configService = app.get(ConfigService);
+  const redisService = app.get(RedisService);
 
   /* ---------- Global Prefix ---------- */
   const globalPrefix = 'api';
