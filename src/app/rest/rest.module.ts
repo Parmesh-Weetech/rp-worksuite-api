@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { EmployeeModule } from '../employee/employee.module';
 
-@Module({})
+@Module({
+  imports: [EmployeeModule],
+})
 export class RestModule {}
