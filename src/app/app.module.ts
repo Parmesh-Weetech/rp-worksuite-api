@@ -6,6 +6,7 @@ import { environmentConfig, postgresConfig } from './common/config';
 import { DataSourceOptions } from 'typeorm';
 import { getConfig } from './common/helpers';
 import { MailModule } from './mail/mail.module';
+import { BullModule } from '@nestjs/bullmq';
 
 @Module({
   imports: [
@@ -24,6 +25,33 @@ import { MailModule } from './mail/mail.module';
         ...getConfig<DataSourceOptions>(configService, 'postgresConfig'),
         autoLoadEntities: true,
       }),
+    }),
+
+    BullModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        const host = configService.getOrThrow<string>('REDIS_HOST');
+        const port = parseInt(configService.getOrThrow<string>('REDIS_PORT'));
+        const password = configService.get<string>('REDIS_PASSWORD');
+
+        return {
+          connection: {
+            host,
+            port,
+            ...(password ? { password } : {}),
+          },
+          defaultJobOptions: {
+            attempts: 3,
+            backoff: {
+              type: 'exponential',
+              delay: 1000,
+            },
+            removeOnComplete: 1000,
+            removeOnFail: false,
+          },
+        };
+      },
     }),
 
     RestModule,

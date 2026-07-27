@@ -50,17 +50,23 @@
     "migration:generate:local": "cross-env NODE_ENV=local typeorm-ts-node-commonjs migration:generate -d ./db/typeorm.config.ts"
   },
   "dependencies": {
+    "@bull-board/api": "^8.3.0",
+    "@bull-board/express": "^8.3.0",
+    "@nestjs/bullmq": "^11.0.4",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.4",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.4.6",
     "@nestjs/typeorm": "^11.0.3",
+    "bullmq": "^5.81.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
+    "connect-redis": "^10.0.0",
     "cross-env": "^10.1.0",
     "dotenv": "^17.4.2",
     "pg": "^8.22.0",
+    "redis": "^6.1.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "typeorm": "^1.1.0"
